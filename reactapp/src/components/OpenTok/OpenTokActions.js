@@ -1,7 +1,7 @@
 export const INITIALIZE_OPEN_TOCK = "INITIALIZE_OPEN_TOCK";
 export const SET_CREDENTIALS = "SET_CREDENTIALS";
 import Api from "../../api";
-import OpenTockService from "./OpenTockService";
+import OpenTokService from "./OpenTokService";
 
 export const initializeOpentTock = options => {
   return {
@@ -23,7 +23,7 @@ export const configureTokens = options => {
       .then(response => {
         const credentials = response.body;
         dispatch(setCredentials(credentials));
-        OpenTockService.init(credentials);
+        OpenTokService.init(credentials);
       })
       .catch( error => console.log(error))
   }

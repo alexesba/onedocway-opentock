@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
-import { configureTokens } from "./OpenTockActions";
-import OpenTock from "./OpenTock";
+import { configureTokens } from "./OpenTokActions";
+import OpenTok from "./OpenTok";
 
 const mapStateToProps = state => {
-  return state.OpenTockReducer
+  return state.OpenTokReducer
 }
 
 const mapDispatchToProps = dispatch => {
@@ -12,9 +12,9 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const OpenTockContainer = connect(
+const OpenTokContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(OpenTock);
+)(OpenTok);
 
-export default OpenTockContainer;
+export default OpenTokContainer;

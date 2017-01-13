@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from "react";
 import CSSModules from "react-css-modules";
 import style from "./style.scss";
 
-class OpenTock extends Component {
+class OpenTok extends Component {
 
   constructor(props) {
     super(props);
@@ -10,12 +10,12 @@ class OpenTock extends Component {
   }
 
   static propTypes = {
-    openTockUrl: PropTypes.string.isRequired,
+    openTokUrl: PropTypes.string.isRequired,
     onConfigureTokens: PropTypes.func.isRequired
   }
 
   static defaultProps = {
-    openTockUrl: "https://static.opentok.com/v2/js/opentok.js",
+    openTokUrl: "https://static.opentok.com/v2/js/opentok.js",
     loading: true
   }
 
@@ -24,9 +24,9 @@ class OpenTock extends Component {
   }
 
   componentDidMount() {
-    const { openTockUrl } = this.props;
+    const { openTokUrl } = this.props;
     const script = document.createElement("script");
-    script.src = openTockUrl;
+    script.src = openTokUrl;
     script.onload = (url) => this.onLoadScript(url);
     document.body.appendChild(script);
   }
@@ -34,12 +34,17 @@ class OpenTock extends Component {
   render() {
     if (this.props.loading) return <div>Initializing OpenTok calls...</div>;
     return (
-      <li>
-        <div id="publisherContainer" styleName="publisher-container"></div>
-        <div id="subscriberContainer" styleName="subscriber-container"></div>
-      </li>
+      <div>
+        <div styleName="chat-container">
+          <div id="publisherContainer" styleName="publisher-container"></div>
+          <div id="subscriberContainer" styleName="subscriber-container"></div>
+        </div>
+        <div>
+          <button>Connect</button>
+        </div>
+      </div>
     );
   }
 }
 
-export default CSSModules(OpenTock, style);
+export default CSSModules(OpenTok, style);

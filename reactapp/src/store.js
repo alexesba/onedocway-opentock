@@ -5,7 +5,7 @@ import { routerMiddleware } from "react-router-redux";
 
 // Import reducers
 import  { AppReducer } from "./components/App";
-import { OpenTockReducer } from "./components/OpenTock";
+import { OpenTokReducer } from "./components/OpenTok";
 
 const reactRouterReduxMiddleware = routerMiddleware(browserHistory);
 
@@ -15,7 +15,7 @@ let createStoreWithMiddleware = applyMiddleware(
 
 let reducers = combineReducers({
   AppReducer,
-  OpenTockReducer
+  OpenTokReducer
 });
 
 export default createStoreWithMiddleware(reducers);

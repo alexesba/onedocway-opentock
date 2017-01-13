@@ -8,15 +8,15 @@ export default  {
     height: '100%',
   },
   init(credentials) {
-    console.log("Initialize OpenTock Service", credentials);
+    console.log("Initialize OpenTok Service", credentials);
     this.session = OT.initSession(credentials.api_key, credentials.session_id);
+
     this.session.on("streamCreated", (event) => {
       this.subscribe(event);
     });
 
-
     this.session.connect(credentials.token, error => {
-      this.getDevices().then( configOptions =>{
+      this.getDevices().then(configOptions =>{
         const publisher = OT.initPublisher(this.publisherContainer, {...configOptions, ...this.defaultOptions} );
 
         this.session.publish(publisher, error => {
@@ -37,7 +37,6 @@ export default  {
   getDevices() {
     let audioInputDevices, videoInputDevices;
     return new Promise((resolve, reject) => {
-
       OT.getDevices((error, devices) => {
         if (error) return reject(error);
         audioInputDevices = devices.filter(element => element.kind == "audioInput");

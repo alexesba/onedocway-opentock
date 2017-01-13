@@ -1,0 +1,15 @@
+.chat-container {
+  display: table;
+  text-align: center;
+  margin: 0 auto;
+  outline: solid gray 1px;
+}
+.publisher-container, .subscriber-container {
+  background: white;
+  display: block;
+  float: left;
+  padding: 5px;
+  height: 100vh;
+  width: 49vh;
+  max-height: 50vh;
+}

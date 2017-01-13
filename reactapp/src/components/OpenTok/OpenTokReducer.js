@@ -1,7 +1,7 @@
 import {
   INITIALIZE_OPEN_TOCK,
   SET_CREDENTIALS
-}  from "./OpenTockActions.js";
+}  from "./OpenTokActions";
 
 const DEFAULT_STATE = {
   initialized: false,

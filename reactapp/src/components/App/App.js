@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import CSSModules from "react-css-modules";
 import style from "./style.scss";
-import { OpenTockContainer } from "../OpenTock";
+import { OpenTokContainer } from "../OpenTok";
 
 class App extends Component {
 
   render() {
     return (
-      <OpenTockContainer/>
+      <OpenTokContainer/>
     );
   }
 
