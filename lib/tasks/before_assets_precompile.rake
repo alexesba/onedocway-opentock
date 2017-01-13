@@ -7,7 +7,7 @@ namespace :heroku do
     system 'cd reactapp && npm install && cd ..'
 
     puts 'Building Node app...'
-    system 'cd reactapp/ && npm run build -- --release --verbose && cd ..'
+    system 'cd reactapp/ && npm run build && cd ..'
 
     puts 'Moving files to rails assets...'
     system 'cp reactapp/build/app.js app/assets/javascripts/app.js'
