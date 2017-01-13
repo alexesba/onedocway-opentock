@@ -15,3 +15,8 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+app/assets/javascripts/app.js
+app/assets/stylesheets/app.scss
+app/assets/stylesheets/style.css
+node_modules/
+config/application.yml
