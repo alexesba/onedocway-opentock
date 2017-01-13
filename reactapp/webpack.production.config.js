@@ -56,6 +56,7 @@ module.exports = {
         "NODE_ENV": '"production"'
       }
     }),
+    new webpack.optimize.UglifyJsPlugin(),
     new ExtractTextPlugin('style.css'),
     new HtmlWebpackPlugin({
       title: "Awesome React!!",

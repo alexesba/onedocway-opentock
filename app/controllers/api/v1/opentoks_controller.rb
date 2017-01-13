@@ -2,8 +2,8 @@ class Api::V1::OpentoksController < Api::V1::ApplicationController
   def token
     render json: {
       api_key: api_key,
-      session_id: opentok_session.session_id,
-      token: opentok.generate_token(opentok_session.session_id)
+      session_id: room.name,
+      token: opentok.generate_token(room.name)
     }
   end
 
@@ -20,8 +20,16 @@ class Api::V1::OpentoksController < Api::V1::ApplicationController
       @opentok ||= ::OpenTok::OpenTok.new(api_key, api_secret)
     end
 
-    def opentok_session
-      @opentok_session ||= opentok.create_session
+    def room
+     @room ||= ( Room.first ||  create_room)
+    end
+
+    def open_tock_session
+      @open_tock_session ||= opentok.create_session
+    end
+
+    def create_room
+      Room.create(name: open_tock_session.session_id)
     end
 
 end
