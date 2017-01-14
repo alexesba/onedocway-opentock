@@ -3,7 +3,7 @@ class Api::V1::OpentoksController < Api::V1::ApplicationController
     render json: {
       api_key: api_key,
       session_id: room.name,
-      token: opentok.generate_token(room.name)
+      token: generate_token(params[:username])
     }
   end
 
@@ -26,6 +26,14 @@ class Api::V1::OpentoksController < Api::V1::ApplicationController
 
     def open_tock_session
       @open_tock_session ||= opentok.create_session
+    end
+
+    def generate_token(username)
+      opentok.generate_token(room.name, role: role_name_for(username), data: "username=#{params[:username]}")
+    end
+
+    def role_name_for(username)
+      username && username.match(/provider/i) ? :publisher : :subscriber
     end
 
     def create_room
