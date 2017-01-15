@@ -11,9 +11,8 @@ class ControlButtons extends Component {
     disconnectLabel: PropTypes.string.isRequired,
     connectLabel: PropTypes.string.isRequired,
     onPhysicianConnect: PropTypes.func.isRequired,
-    onPhysicianDisconnect: PropTypes.func.isRequired,
     onPatientConnect: PropTypes.func.isRequired,
-    onPatientDisconnect: PropTypes.func.isRequired
+    onDisconnect: PropTypes.func.isRequired
   }
 
   static defaultProps = {
@@ -23,9 +22,8 @@ class ControlButtons extends Component {
     disconnectingLabel: "Disconnecting...",
     connectingLabel: "Connecting...",
     onPhysicianConnect: () => console.log("override onPhysicianConnect Action"),
-    onPhysicianDisconnect: () => console.log("override onPhysicianDisconnect Action"),
     onPatientConnect: () => console.log("override onPatientConnect Action"),
-    onPatientDisconnect: () => console.log("override onPatientDisconnect Action")
+    onDisconnect: () => console.log("override onPatientDisconnect Action")
   }
 
   constructor(props) {
@@ -35,33 +33,55 @@ class ControlButtons extends Component {
   }
 
   getAction(type) {
-    const { status, onPhysicianDisconnect, onPhysicianConnect, connecting,
-      disconnecting, onPatientConnect, onPatientDisconnect, role} =  this.props;
+    const { connected, onPhysicianConnect,onPatientConnect, connecting,
+      disconnecting, onDisconnect} =  this.props;
+    if (connecting || disconnecting) return () => console.log("Connection in Progress");
     switch(type){
       case "physician":
-        return status ? onPhysicianDisconnect : onPhysicianConnect;
+        return connected ? onDisconnect : onPhysicianConnect;
       case "patient":
-        return status ? onPatientDisconnect : onPatientConnect;
+        return connected ? onDisconnect : onPatientConnect;
     }
   }
 
   getLabel(type) {
     const { connected, disconnecting, connecting, disconnectLabel,
       connectingLabel, connectLabel, loadingLabel, role } =  this.props;
+    if(disconnecting) return `Disconnecting ${role}...`
     if(!connected && role != type) return `${connectLabel} as ${type}`;
-    if(connected && role == type) return connectLabel;
+    if(connected && role == type) return disconnectLabel;
     if(connecting && role == type) return connectingLabel;
   }
 
+  renderPhysicianButton() {
+    const { role, connected } = this.props;
+    const shouldRender = connected && role === "physician" || !connected
+    return(
+      shouldRender ?
+      <button onClick={ this.getAction("physician") }>
+        { this.getLabel("physician") }
+      </button> : null
+    )
+  }
+
+  renderPatientButton() {
+    const { role, connected } = this.props;
+    const shouldRender = connected && role === "patient" || !connected
+    return(
+      shouldRender ?
+      <button styleName={ connected ? 'connected' : null }onClick={ this.getAction("patient") }>
+        { this.getLabel("patient") }
+      </button> : null
+    )
+  }
+
   render() {
+    const { connected, role} = this.props;
     return (
       <div styleName="control-buttons">
-        <button onClick={ this.getAction("physician") }>
-          { this.getLabel("physician") }
-        </button>
-        <button onClick={ this.getAction("patient")}>
-          { this.getLabel("patient") }
-        </button>
+        <h3>{ connected ? `Connected as: ${this.props.role}` : null }</h3>
+         { this.renderPhysicianButton() }
+         { this.renderPatientButton() }
       </div>
     )
   }

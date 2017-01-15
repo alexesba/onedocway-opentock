@@ -13,12 +13,22 @@ export default  {
 
   connect(type) {
     console.log("will be connected with:", this.userName);
-    this.getDevices().then(configOptions =>{
-      this.session.connect(this.credentials.token, error => {
-        this.publish(configOptions, error)
+    return new Promise((resolve, reject) => {
+      this.getDevices().then(configOptions =>{
+        this.session.connect(this.credentials.token, error => {
+          if (error) return reject(error);
+          this.publish(configOptions)
+          resolve();
+        });
       });
     });
+  },
 
+  disconnect() {
+    return new Promise((resolve, reject) => {
+      this.session.disconnect();
+      resolve()
+    });
   },
 
   publish(configOptions){

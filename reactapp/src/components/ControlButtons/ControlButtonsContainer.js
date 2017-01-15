@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import ControlButtons from "./ControlButtons";
-import { connectToCall } from "./ControlButtonsActions";
+import { connectToCall, disconnectToCall} from "./ControlButtonsActions";
 
 const mapStateToProps = state => {
   return state.ControlButtonsReducer
@@ -9,7 +9,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onPhysicianConnect: () => dispatch(connectToCall("physician")),
-    onPatientConnect: () => dispatch(connectToCall("patient"))
+    onPatientConnect: () => dispatch(connectToCall("patient")),
+    onDisconnect: () => dispatch(disconnectToCall())
   }
 }
 

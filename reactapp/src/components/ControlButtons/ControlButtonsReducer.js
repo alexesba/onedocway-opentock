@@ -20,7 +20,7 @@ export default (state = DEFAULT_STATE, action) => {
     case DISCONNECTING_TO_CALL:
       return { ...state, disconnecting: true }
     case DISCONNECTED_TO_CALL:
-      return { ...state, disconnecting: false, connected: false }
+      return { ...state, ...DEFAULT_STATE}
     default:
       return state;
   }

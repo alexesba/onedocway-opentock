@@ -1,3 +1,10 @@
 .control-buttons {
-  color: red;
+  button {
+    background: green;
+    padding: 10px;
+    color: white;
+    &.connected {
+      background: red;
+    }
+  }
 }
