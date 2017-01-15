@@ -1,13 +1,15 @@
 import OpenTok from "./OpenTok";
-import OpenTokActions from "./OpenTokActions";
+import * as OpenTokActions from "./OpenTokActions";
 import OpenTokContainer from "./OpenTokContainer";
 import OpenTokReducer from "./OpenTokReducer";
+import OpenTokService from "./OpenTokService";
 
 export {
   OpenTok,
   OpenTokActions,
   OpenTokContainer,
-  OpenTokReducer
+  OpenTokReducer,
+  OpenTokService
 };
 
 export default OpenTok;

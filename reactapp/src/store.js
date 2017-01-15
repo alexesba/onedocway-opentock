@@ -6,6 +6,7 @@ import { routerMiddleware } from "react-router-redux";
 // Import reducers
 import  { AppReducer } from "./components/App";
 import { OpenTokReducer } from "./components/OpenTok";
+import { ControlButtonsReducer } from "./components/ControlButtons";
 
 const reactRouterReduxMiddleware = routerMiddleware(browserHistory);
 
@@ -15,7 +16,8 @@ let createStoreWithMiddleware = applyMiddleware(
 
 let reducers = combineReducers({
   AppReducer,
-  OpenTokReducer
+  OpenTokReducer,
+  ControlButtonsReducer
 });
 
 export default createStoreWithMiddleware(reducers);

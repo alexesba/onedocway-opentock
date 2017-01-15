@@ -1,12 +1,14 @@
 import {
   INITIALIZE_OPEN_TOCK,
-  SET_CREDENTIALS
+  SET_CREDENTIALS,
+  SET_USERNAME
 }  from "./OpenTokActions";
 
 const DEFAULT_STATE = {
   initialized: false,
   credentials: {},
-  loading: true
+  loading: true,
+  username: ""
 }
 
 export default (state=DEFAULT_STATE, action) => {
@@ -16,6 +18,8 @@ export default (state=DEFAULT_STATE, action) => {
     case SET_CREDENTIALS:
       const { credentials } = action;
       return { ...state, credentials, loading: false }
+    case SET_USERNAME:
+      return {...state, username: action.username }
     default:
       return state;
   }

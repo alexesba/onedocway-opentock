@@ -1,37 +1,65 @@
 import { Promise } from "es6-promise";
+import  Api  from "../../api";
+import { OpenTokService } from "./OpenTokService";
 export default  {
   publisherContainer: "publisherContainer",
   subscriberContainer: "subscriberContainer",
+  userName:"Username",
   defaultOptions: {
     insertMode: 'append',
     width: '100%',
     height: '100%',
   },
-  init(credentials) {
-    console.log("Initialize OpenTok Service", credentials);
-    this.session = OT.initSession(credentials.api_key, credentials.session_id);
 
-    this.session.on("streamCreated", (event) => {
-      this.subscribe(event);
+  connect(type) {
+    console.log("will be connected with:", this.userName);
+    this.getDevices().then(configOptions =>{
+      this.session.connect(this.credentials.token, error => {
+        this.publish(configOptions, error)
+      });
     });
 
-    this.session.connect(credentials.token, error => {
-      this.getDevices().then(configOptions =>{
-        const publisher = OT.initPublisher(this.publisherContainer, {...configOptions, ...this.defaultOptions} );
+  },
 
-        this.session.publish(publisher, error => {
-          if(error) {
-            console.log(error);
-          }else{
-            console.log("Publishing a stream");
-          }
-        })
-      }).catch(error => console.log(error));
-    });
+  publish(configOptions){
+    this.publisher = OT.initPublisher(
+      this.userName.match(/physician/i) ? this.publisherContainer: this.subscriberContainer,
+      {...configOptions, ...this.defaultOptions, name: this.userName, style: { nameDisplayMode: "on" } }
+    );
 
-    this.session.on("sessionDisconnected", event =>  {
-      console.log("Session Disconnnected", event.reason);
+    this.session.publish(this.publisher, error => {
+      if(error) {
+        console.log(error);
+      }else{
+        console.log("Publishing a stream");
+      }
+    })
+  },
+
+  initSession(type) {
+    this.userName = type;
+    this.session = OT.initSession(this.credentials.api_key, this.credentials.session_id);
+    this.session.on('streamCreated', event => {
+      event.streams.forEach(stream => {
+        if (stream.connection.connectionId != this.session.connection.connectionId) {
+          this.subscribe(stream);
+        }
+      })
+
+    })
+
+    return new Promise((resolve) => {
+      resolve(this.session);
     });
+  },
+
+  getCredentials(username) {
+    return Api.get("opentok/token", { username })
+      .then(response => {
+        this.credentials  = response.body;
+        return this.credentials;
+      })
+      .catch( error => console.log(error))
   },
 
   getDevices() {
@@ -48,9 +76,13 @@ export default  {
     });
   },
 
-  subscribe(event) {
-    this.session.subscribe(event.stream, this.subscriberContainer, this.defaultOptions);
+  subscribe(stream) {
+    let container = this.subscriberContainer;
+    if(stream.connection.data.match(/physician/i))
+      container  = this.publisherContainer;
+    this.session.subscribe(stream, container, this.defaultOptions);
   }
+
 
 }
 

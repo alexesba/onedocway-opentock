@@ -11,10 +11,12 @@ export const initializeOpentTock = options => {
 }
 
 export const setCredentials = credentials => {
-  return {
-    type: SET_CREDENTIALS,
-    credentials
-  }
+  return new Promise(resolve => {
+    resolve({
+      type: SET_CREDENTIALS,
+      credentials
+    });
+  });
 }
 
 export const configureTokens = options => {
@@ -23,7 +25,7 @@ export const configureTokens = options => {
       .then(response => {
         const credentials = response.body;
         dispatch(setCredentials(credentials));
-        OpenTokService.init(credentials);
+        OpenTokService.initSession(credentials);
       })
       .catch( error => console.log(error))
   }

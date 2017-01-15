@@ -29,11 +29,7 @@ class Api::V1::OpentoksController < Api::V1::ApplicationController
     end
 
     def generate_token(username)
-      opentok.generate_token(room.name, role: role_name_for(username), data: "username=#{params[:username]}")
-    end
-
-    def role_name_for(username)
-      username && username.match(/provider/i) ? :publisher : :subscriber
+      opentok.generate_token(room.name, role: :publisher, data: "username=#{params[:username]}")
     end
 
     def create_room
