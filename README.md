@@ -1,5 +1,5 @@
 ## Creating a session
-Create an OpenTok session that clients can connect to, publish streams to, and subscribe to streams within. in our case we need to implement the ruby version in our backend.
+Create an OpenTok session by  clients can connect to, publish streams to, and subscribe to streams within. in our case by which need to implement the ruby version in our backend.
 The code below will ilustrate how we can implement a simple controller to create a session and how to generate tockens with the permission to publish their audio-video streams
 ```ruby
 class Api::V1::OpentoksController < Api::V1::ApplicationController
