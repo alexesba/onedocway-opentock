@@ -1,6 +1,6 @@
-## Creating a session
+## Creating a session --
 Create an OpenTok session that clients can connect to, publish streams to, and subscribe to streams within. in our case we need to implement the ruby version in our backend.
-The code below will ilustrate how we can implement a simple controller to create a session and how to generate tockens with the permission to publish their audio-video streams
+The code below will ilustrate how we can implement a simple controller to create a session and how to generate tockens with the permission to publish their audio-video streams.
 ```ruby
 class Api::V1::OpentoksController < Api::V1::ApplicationController
   def token
@@ -55,7 +55,7 @@ end
    A session also dispatches events representing changes in the session.
 
 
-## OpenTok Pros:
+## OpenTok Pros --
 
 - **Multi-platform Capability:**
    - OpenTok works on the latest versions of Google Chrome, Mozilla Firefox, and Internet Explorer 10-11 (via the OpenTok Plugin)
@@ -73,7 +73,7 @@ end
   - **Moderator:** In addition to publishing and subscribing to streams, moderators can force other clients to disconnect from a session or force a client to stop publishing an
   audio-video stream
   
-## OpenTok Cons:
+## OpenTok Cons --
   - Built with WebRTC(which means some devises will not be able to use the app).
   - Safari Doesn't support that feature.
   - Talking about "Moderation" feature this is not supported on mobile devices it is supported only for OpenTock.js(web browser) version
